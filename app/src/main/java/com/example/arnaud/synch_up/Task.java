@@ -13,6 +13,7 @@ public class Task {
     private Boolean faitNonFait;
 
     //méthodes (fonctions)
+    //setters et getters
     public String getDescription() {return description;}
     public String getNom() {return nom;}
     public void setDescription(String description) {this.description = description;}
@@ -20,7 +21,9 @@ public class Task {
     public void setFaitNonFait(Boolean faitNonFait) {this.faitNonFait = faitNonFait;}
     public Boolean getFaitNonFait() {return faitNonFait;}
 
-    public void taskFaite(){faitNonFait=true;}
+    //autre
+
+    public void taskFaite(){faitNonFait=true;}//on s'en sert dans Projet
 
 
     //constrcuteur (initialisation)

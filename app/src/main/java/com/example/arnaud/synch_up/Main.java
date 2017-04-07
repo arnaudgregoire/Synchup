@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         Application theApplication; // declaration of an object theGame, instance of the class Game
-        theApplication = new Application(); // initialization/construction of the object theGame, thanks to a constructor of the class Game
-        theApplication.launch(); //call to the method play() of the object theGame
+        theApplication = new Application(); // initialization/construction of the object theApplication, thanks to a constructor of the class Application
+        theApplication.launch(); //call to the method launch() of the object theApplication
     }
 }

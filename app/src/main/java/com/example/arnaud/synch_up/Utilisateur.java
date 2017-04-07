@@ -14,14 +14,16 @@ public class Utilisateur {
     private ArrayList<Projet> listeDeProjets;
 
     //méthodes
+
     public void addProjet(Projet p){
         listeDeProjets.add(p);
     }
+
+    //setters et getters
+
     public ArrayList<Projet> getListeProjets(){
         return listeDeProjets;
     }
-
-
     public void setMdp(String mdp) {this.mdp = mdp;}
     public void setNom(String nom) {this.nom = nom;}
     public void setListeDeProjets( ArrayList<Projet> listeDeProjets) {this.listeDeProjets = listeDeProjets;}

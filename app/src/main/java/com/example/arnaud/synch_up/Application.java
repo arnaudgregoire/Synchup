@@ -6,30 +6,30 @@ import java.util.Scanner;
  */
 
 public class Application {
-    private ArrayList<Utilisateur> l_user = new ArrayList<Utilisateur>();
+    private ArrayList<Utilisateur> l_user = new ArrayList<Utilisateur>(); //on crée la liste d'utilisateur
     private Utilisateur currentUser;
     private Projet currentProjet;
 
 
-    public void launch(){
+    public void launch(){ //ici c'est un peu notre main, c'est d'ailleur ce qu'on appelle depuis main
         initialisation();
         Connexion();
     }
 
-    private void initialisation(){
-        Utilisateur ariane = new Utilisateur("zezertiou","dedede",new ArrayList<Projet>());
-        Projet synchup = new Projet("Synchup","Une application permettant de gérer les tâches",60,0, new ArrayList<Task>());
-        Task ensg = new Task("Faire marcher le bordel", "Demander à un élève de l'ENSG de tout faire à votre place");
-        ArrayList<Task> l_tache_synchup = new ArrayList<Task>();
-        ArrayList<Projet> l_projet_ariane = new ArrayList<Projet>();
-        l_tache_synchup.add(ensg);
-        synchup.setListTaches(l_tache_synchup);
-        l_projet_ariane.add(synchup);
-        ariane.setListeDeProjets(l_projet_ariane);
-        l_user.add(ariane);
+    private void initialisation(){ //à efault de pouvoir sauvegarder , on crée des trucs préenregistrés
+        Utilisateur ariane = new Utilisateur("zezertiou","dedede",new ArrayList<Projet>()); //on crée le projet et sa liste de projet
+        Projet synchup = new Projet("Synchup","Une application permettant de gérer les tâches",60,0, new ArrayList<Task>()); // on crée le projet et sa liste de tâche
+        Task escp = new Task("Faire marcher le bordel", "Et y passer un temps fou");//on crée une tache
+        ArrayList<Task> l_tache_synchup = new ArrayList<Task>(); // on crée la liste de tache du projet synchup
+        ArrayList<Projet> l_projet_ariane = new ArrayList<Projet>();//on crée la liste de projet de l'utilisateur Ariane
+        l_tache_synchup.add(escp);//on ajoute la tache escp a la liste de tache du projet synchup
+        synchup.setListTaches(l_tache_synchup);//la liste tache synchup devient l'attribut de l'objet ptojet synchup
+        l_projet_ariane.add(synchup);//on ajoute le projet synchup a la liste de projet d'ariane
+        ariane.setListeDeProjets(l_projet_ariane);// la liste de projet devient l'attribut de l'utilisateur Ariane
+        l_user.add(ariane);//on ajoute l'utilisateur Ariane à la liste d'utilisateurs
     }
 
-    private void Connexion() {
+    private void Connexion() { // on se connecte bref
         Scanner sc = new Scanner(System.in);
         System.out.println("Avez-vous déjà un compte ? Possibilités de réponse : 'Oui' et 'Non'.");
         String rep = sc.nextLine();
@@ -47,7 +47,7 @@ public class Application {
         }
     }
 
-    private void Quefaire() {
+    private void Quefaire() {//la fameuse méthode qu'on va appeler sans arret
         DispCurrentProjet();
         Scanner Su = new Scanner(System.in);
         System.out.println("Que souhaitez-vous faire à présent?");
@@ -62,7 +62,7 @@ public class Application {
         System.out.println(" - 7) Vérifier la deadline d'une tâche ");
         System.out.println(" - 8) Me déconnecter");
 
-        String rep = Su.nextLine();
+        String rep = Su.nextLine();//suit un long switch qui à chawque fois appelle une méthode spé, puis la méthode quefaire
         switch (rep) {
             case "0":
                 System.out.println("");
@@ -88,7 +88,7 @@ public class Application {
             case "3":
                 System.out.println("");
                 System.out.println("Vous avez choisi d'afficher les taches du projet sélectionné");
-                Boolean projet_exist = DispCurrentProjet();
+                Boolean projet_exist = DispCurrentProjet();//méthode qui détecte si un projet existe et si c'est le cas affiche le nom du projet
                 if(projet_exist){
                     afficherTask();
                     Quefaire();
@@ -99,7 +99,7 @@ public class Application {
                 break;
 
             case "4":
-                System.out.println("");
+                System.out.println("");//on aére
                 System.out.println("Vous avez choisi de créér une tache");
                 Boolean projet_exist2 = DispCurrentProjet();
                 if(projet_exist2){
@@ -139,6 +139,7 @@ public class Application {
 
             case "7":
                 deadlineTask();
+                Quefaire();
                 break;
 
             case "8":
@@ -156,7 +157,7 @@ public class Application {
         Boolean result = false;
         for(int i = 0; i < l_user.size(); i++)
         {
-            if (l_user.get(i).getNom().equals(nom) &&  l_user.get(i).getMdp().equals(mdp) ){
+            if (l_user.get(i).getNom().equals(nom) &&  l_user.get(i).getMdp().equals(mdp) ){//cf cours d'OpenClassrooms sur les ArrayList
                 result = true;
             }
         }
@@ -233,13 +234,14 @@ public class Application {
         System.out.println("Nous n'avons pas compris votre instruction, veuillez prendre soin de respecter l'orthographe et les majuscules des choix possibles.");
     }
 
-    private ArrayList<Projet> afficherProjets(){
+    private ArrayList<Projet> afficherProjets(){//lea méthode renvoie une Array liste de projets
+        // pour tout ce qui est get(i), voir cours d'openclassrroms sur les collections d'objets
 
-        ArrayList<Projet> l_projet =  currentUser.getListeProjets();
+        ArrayList<Projet> l_projet =  currentUser.getListeProjets();//elle regarde si il y a des projets en cours
         if (l_projet.size() == 0){
             System.out.println("Vous n'avez aucun projet en cours");
         }
-        else {
+        else {//et affiche tous les projets
             for (int i = 0; i < l_projet.size(); i++) {
                 System.out.println("projet n° " + l_projet.get(i).getNumero() + " :");
                 System.out.println("Nom :" + l_projet.get(i).getNom());
@@ -252,7 +254,7 @@ public class Application {
 
     private Boolean DispCurrentProjet(){
         Boolean result = false;
-        if (currentProjet == null){
+        if (currentProjet == null){//==null => est ce que l'objet existe ?
             System.out.println("Vous n'avez aucun projet en cours, vous pouvez en ouvrir un avec - 1) Ouvrir un projet ");
         }
         else{
@@ -266,7 +268,7 @@ public class Application {
         Scanner sc = new Scanner(System.in);
         ArrayList<Projet> l_projet = afficherProjets();
         System.out.println("Tapez le numéro du projet pour le sélectionner : ");
-        Integer id_projet = Integer.valueOf(sc.nextLine());
+        Integer id_projet = Integer.valueOf(sc.nextLine());//le scanner lit un String et on veut le transformer en int
         return l_projet.get(id_projet);
     }
 
@@ -277,13 +279,13 @@ public class Application {
         System.out.println("Description : ");
         String description = sc.nextLine();
         System.out.println("temps : ");
-        Integer temps = Integer.valueOf(sc.nextLine());
-        currentUser.addProjet(new Projet(nom, description, temps, currentUser.getListeProjets().size(),new ArrayList<Task>()));
+        Integer temps = Integer.valueOf(sc.nextLine()); //le scanner lit un String et on veut le transformer en int
+        currentUser.addProjet(new Projet(nom, description, temps, currentUser.getListeProjets().size(),new ArrayList<Task>()));//on crée tout et on ajoute ça a la liste de projet de k'user
         System.out.println("Votre projet a bien été ajouté");
         System.out.println("");
     }
 
-    private ArrayList<Task> afficherTask(){
+    private ArrayList<Task> afficherTask(){//même démarche que pour afficherprojet
         ArrayList<Task> l_tache = currentProjet.getListTaches();
         if (l_tache.size() == 0){
             System.out.println("Vous n'avez aucune tache en cours");
@@ -308,7 +310,7 @@ public class Application {
         System.out.println("Description : ");
         String description = sc.nextLine();
         currentProjet.addTache(new Task(nom, description));
-        System.out.println("Votre tâche a bien été ajouté");
+        System.out.println("Votre tâche a bien été ajoutée");
         System.out.println("");
     }
 
@@ -316,10 +318,11 @@ public class Application {
         Scanner sc = new Scanner(System.in);
         ArrayList<Task> l_tache = afficherTask();
         System.out.println("Tapez le numéro de la tache à cocher : ");
-        Integer id_tache = Integer.valueOf(sc.nextLine());
-        l_tache.get(id_tache).setFaitNonFait(true);
+        Integer id_tache = Integer.valueOf(sc.nextLine());//la encore on transforme un String en int
+        l_tache.get(id_tache).setFaitNonFait(true);//la tache est cochée, on a changée son attribut fait non fait en fait
     }
 
+    //tout ce qui est deadline n'est pas encore fait. cc Antoine
 
     private void deadlineProjet(){
         System.out.println("Il vous reste " + currentProjet.getTemps() + " jours pour finir le projet");
